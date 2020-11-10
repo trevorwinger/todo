@@ -1,22 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
-
+import ToDo from './Components/ToDo/ToDo';
+import Input from './Components/Input/Input';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import {React, useState} from 'react';
 function App() {
+
+  const [todos, setTodos] = useState([]);
+
+  const content = () => {
+    return(
+      <div>
+        <ThemeProvider theme={theme}>
+          <Input list={todos} setList={setTodos}/>
+              {
+                todos.map(t => 
+                  <ToDo text={t} setList={setTodos} todoList={todos}/>)
+              }
+        </ThemeProvider>
+      </div>
+    )
+  }
+
+  const theme = createMuiTheme({
+    palette:{
+      primary:{
+          main:'#50fa7b',
+      },
+  },
+  })
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        
+          <h1>todos</h1>
+          {content()}
       </header>
     </div>
   );
